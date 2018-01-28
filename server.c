@@ -19,7 +19,7 @@ int main() {
 
   // generating socket configuration
   sock = socket(AF_INET, SOCK_STREAM, 0);
-  if(setsockopt(sock, SOL_SOCKET, SOL_REUSEADDR, &optval, sizeof(optval)) < 0) {
+  if(setsockopt(sock, SOL_SOCKET, SO_REUSEADDR, &optval, sizeof(optval)) < 0) {
     printf("Error setting TCP socket options \n");
     return 1;
   }
