@@ -1,14 +1,14 @@
 # Ambar
 
-This repository contains three source scripts, the `main.c` that acts as a backdoor for Windows clients and a `server.c` as the attacker's C&C for sending commands and gather information, and a `keylogger.h` library.
+This repository contains three source scripts, the `main.c` that acts as a backdoor for Windows clients and a `server.c` as the attacker's `C&C` for sending commands and gather information, and a `keylogger.h` library for writing `.txt` files with an ASCII HEX comparison
 
-The main functionality of this project is to perform a `TCP` reverse shell with C's native sockets library. After the connection is made, you can move into directories, generate a Windows Registry key for malware persistence, and also a simple key-logger in a hard-coded `.txt` file.
+The main functionality of this project is to perform a `TCP` reverse shell with C native sockets library. After the connection is made, you can move into directories, generate a Windows Registry key for malware persistence, and also a simple key-logger in a hard-coded `.txt` file.
 
 Both machines need to be under the same LAN network, but with some port-forwarding, you can extend the LAN range to the internet.
 
 ## C Windows libraries
 
-1. `HINSTANCE` is a handle to instance or module, the Windows OS uses to identify the executable when is in memory
+1. `HINSTANCE` is a handle to instance or module, the Windows OS uses it to identify the executable when is in memory
 2. `hPrev` is used in 64bit Windows
 4. `nCmdShow` is a flag to identify when a program window will be minimized or maximized
 5. `sockaddr_in` (Struct element), pretty similar to a C Class. The `sockaddr_in` specifies the server address.
