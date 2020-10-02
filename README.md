@@ -6,7 +6,7 @@ The main functionality of this project is to perform a `TCP` reverse shell with 
 
 Both machines need to be under the same LAN network, but with some port-forwarding, you can extend the LAN range to the internet.
 
-## C's Windows libraries
+## C Windows libraries
 
 1. `HINSTANCE` is a handle to instance or module, the Windows OS uses to identify the executable when is in memory
 2. `hPrev` is used in 64bit Windows
